@@ -29,7 +29,7 @@ namespace RobotCleanerUnitTests
     {
         public string Clean(int numberOfCommand, int x, int y, string[] commands)
         {
-            return string.Empty;
+            return "1";
         }
     }
 }
