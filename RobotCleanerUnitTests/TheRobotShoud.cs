@@ -15,22 +15,43 @@ namespace RobotCleanerUnitTests
         {
             //Arrange - Given
             var numberOfCommand = int.Parse(numberOfCommandInInputLine);
-            var position = new Position(0, 0);
+            var startPosition = new Position(0, 0);
             
             string[] commands = inputCommands;
 
-            var robotCleaner = new RobotCleaner();
+            var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var result = robotCleaner.Clean(numberOfCommand, position.x, position.y, commands);
+            var result = robotCleaner.Clean(numberOfCommand, startPosition, commands);
 
             //Assert - Then
             result.Should().Be(numberOfCommandInInputLine);
         }
 
-        [Fact]
-        public void RobotMoveOneToTheEast()
+        [Theory]
+        [InlineData("1 1",1,1)]
+        [InlineData("20 30", 20, 30)]
+        [InlineData("-100000 -100000", -100000, -100000)]
+        [InlineData("-200000 -100000", -100000, -100000)]
+        [InlineData("-200000 -200000", -100000, -100000)]
+        [InlineData("-99999 -100001", -99999, -100000)]
+        public void ReturnTrue_GivenSecondInputLine_TheStartingCoordinatesAreCorrect(string secondLine, int xExpected, int yExpected)
         {
+            //Arrange - Given
+            var secondLineAsArray = secondLine.Split(' ');
+
+            var x = int.Parse(secondLineAsArray[0]);
+            var y = int.Parse(secondLineAsArray[1]);
+            var startPosition = new Position(x, y);
+
+            var robotCleaner = new RobotCleaner(startPosition);
+
+            //Act - When
+            var result = robotCleaner.CurrentPosition;
+
+            //Assert - Then
+            result.x.Should().Be(xExpected);
+            result.y.Should().Be(yExpected);
 
         }
     }
