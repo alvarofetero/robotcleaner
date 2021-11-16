@@ -1,4 +1,4 @@
-﻿namespace RobotCleanerUnitTests
+﻿namespace RobotCleanerLibrary
 {
     public class RobotCleaner
     {

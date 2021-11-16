@@ -1,5 +1,5 @@
 using FluentAssertions;
-using System;
+using RobotCleanerLibrary;
 using Xunit;
 
 namespace RobotCleanerUnitTests

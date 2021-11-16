@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RobotCleaner
+namespace RobotCleanerClient
 {
     class Program
     {
