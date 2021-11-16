@@ -15,14 +15,14 @@ namespace RobotCleanerUnitTests
         {
             //Arrange - Given
             var numberOfCommand = int.Parse(numberOfCommandInInputLine);
-            var startX = 0;
-            var startY = 0;
+            var position = new Position(0, 0);
+            
             string[] commands = inputCommands;
 
             var robotCleaner = new RobotCleaner();
 
             //Act - When
-            var result = robotCleaner.Clean(numberOfCommand, startX, startY, commands);
+            var result = robotCleaner.Clean(numberOfCommand, position.x, position.y, commands);
 
             //Assert - Then
             result.Should().Be(numberOfCommandInInputLine);
