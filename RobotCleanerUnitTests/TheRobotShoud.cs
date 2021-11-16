@@ -6,14 +6,18 @@ namespace RobotCleanerUnitTests
 {
     public class TheRobotShoud
     {
-        [Fact]
-        public void ReturnTrue_GivenFirstInputLine_IsAnInteger()
+
+        [Theory]
+        [InlineData("1", new string[] { "E 1" })]
+        [InlineData("2", new string[] { "E 1", "N 5" })]
+        [InlineData("3", new string[] { "E 1", "N 5", "S 10" })]
+        public void ReturnTrue_GivenFirstInputLine_NumnberOfCommandsIsCorrect(string numberOfCommandInInputLine, string[] inputCommands)
         {
             //Arrange - Given
-            var numberOfCommand = 1;
+            var numberOfCommand = int.Parse(numberOfCommandInInputLine);
             var startX = 0;
             var startY = 0;
-            string[] commands = {"E 0"};
+            string[] commands = inputCommands;
 
             var robotCleaner = new RobotCleaner();
 
@@ -21,15 +25,13 @@ namespace RobotCleanerUnitTests
             var result = robotCleaner.Clean(numberOfCommand, startX, startY, commands);
 
             //Assert - Then
-            result.Should().Be("1");
+            result.Should().Be(numberOfCommandInInputLine);
         }
-    }
 
-    public class RobotCleaner
-    {
-        public string Clean(int numberOfCommand, int x, int y, string[] commands)
+        [Fact]
+        public void RobotMoveOneToTheEast()
         {
-            return "1";
+
         }
     }
 }
