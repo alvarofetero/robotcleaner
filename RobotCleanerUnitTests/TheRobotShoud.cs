@@ -77,7 +77,29 @@ namespace RobotCleanerUnitTests
         [Theory]
         [InlineData("N 0", 1, 1)]
         [InlineData("N 1", 1, 0)]
+        [InlineData("N 5", 1, -4)]
         public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_North_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
+        {
+            //Arrange - Given
+            var thirdLine = commandLine;
+            string[] commands = { thirdLine };
+            var startPosition = new Position(1, 1);
+            var robotCleaner = new RobotCleaner(startPosition);
+
+            //Act - When
+            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var result = robotCleaner.CurrentPosition;
+
+            //Assert - Then
+            result.x.Should().Be(xExpected);
+            result.y.Should().Be(yExpected);
+        }
+
+        [Theory]
+        [InlineData("S 0", 1, 1)]
+        [InlineData("S 1", 1, 2)]
+        [InlineData("S 5", 1, 6)]
+        public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_South_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given
             var thirdLine = commandLine;
