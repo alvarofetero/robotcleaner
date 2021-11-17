@@ -75,9 +75,32 @@ namespace RobotCleanerUnitTests
         }
 
         [Theory]
+        [InlineData("W 0", 1, 1)]
+        [InlineData("W 1", 0, 1)]
+        public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_West_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
+        {
+            //Arrange - Given
+            var thirdLine = commandLine;
+            string[] commands = { thirdLine };
+            var startPosition = new Position(1, 1);
+            var robotCleaner = new RobotCleaner(startPosition);
+
+            //Act - When
+            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var result = robotCleaner.CurrentPosition;
+
+            //Assert - Then
+            result.x.Should().Be(xExpected);
+            result.y.Should().Be(yExpected);
+        }
+
+
+        [Theory]
         [InlineData("N 0", 1, 1)]
         [InlineData("N 1", 1, 0)]
         [InlineData("N 5", 1, -4)]
+        [InlineData("N -1", 1, 1)]
+        [InlineData("N 100000", 1, -99999)]
         public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_North_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given
@@ -99,6 +122,8 @@ namespace RobotCleanerUnitTests
         [InlineData("S 0", 1, 1)]
         [InlineData("S 1", 1, 2)]
         [InlineData("S 5", 1, 6)]
+        [InlineData("S -1", 1, 1)]
+        [InlineData("S 100000", 1, 100001)]
         public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_South_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given

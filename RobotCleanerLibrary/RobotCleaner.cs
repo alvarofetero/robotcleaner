@@ -34,14 +34,24 @@
                 var direction = currentCommand[0];
                 var steps = currentCommand[1];
                 var stepsAsInt = int.Parse(steps);
+                if (stepsAsInt < 0) stepsAsInt = 0;
+                if (stepsAsInt > 100000) stepsAsInt = 100000;
 
                 if (direction == "E")
                 {
                     this.currentPosition.x = this.currentPosition.x + stepsAsInt;
                 }
+                if (direction == "W")
+                {
+                    this.currentPosition.x = this.currentPosition.x - stepsAsInt;
+                }
                 if (direction == "N")
                 {
                     this.currentPosition.y = this.currentPosition.y - stepsAsInt;
+                }
+                if (direction == "S")
+                {
+                    this.currentPosition.y = this.currentPosition.y + stepsAsInt;
                 }
 
             }
