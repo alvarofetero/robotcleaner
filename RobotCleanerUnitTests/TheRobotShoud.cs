@@ -54,11 +54,13 @@ namespace RobotCleanerUnitTests
             result.y.Should().Be(yExpected);
         }
 
-        [Fact]
-        public void ReturnCurrentPosition_1_1_GivenThirdInputLineIs_E0_WhenStartPositionIs_1_1()
+        [Theory]
+        [InlineData("E 0", 1, 1)]
+        [InlineData("E 1", 2, 1)]
+        public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_East_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given
-            var thirdLine = "E 0";
+            var thirdLine = commandLine;
             string[] commands = { thirdLine };
             var startPosition = new Position(1, 1);
             var robotCleaner = new RobotCleaner(startPosition);
@@ -68,26 +70,8 @@ namespace RobotCleanerUnitTests
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
-            result.x.Should().Be(1);
-            result.y.Should().Be(1);
-        }
-
-        [Fact]
-        public void ReturnCurrentPosition_2_1_GivenThirdInputLineIs_E1_WhenStartPositionIs_1_1()
-        {
-            //Arrange - Given
-            var thirdLine = "E 1";
-            string[] commands = { thirdLine };
-            var startPosition = new Position(1, 1);
-            var robotCleaner = new RobotCleaner(startPosition);
-
-            //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, commands);
-            var result = robotCleaner.CurrentPosition;
-
-            //Assert - Then
-            result.x.Should().Be(2);
-            result.y.Should().Be(1);
+            result.x.Should().Be(xExpected);
+            result.y.Should().Be(yExpected);
         }
     }
 }
