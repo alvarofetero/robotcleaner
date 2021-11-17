@@ -26,8 +26,22 @@
             
         }
 
-        public string Clean(int numberOfCommand, Position startPosition, string[] commands)
+        public string Clean(int numberOfCommand, string[] commands)
         {
+            if (commands.Length>0)
+            {
+                var currentCommand=commands[0].Split(' ');
+                var direction = currentCommand[0];
+                var steps = currentCommand[1];
+                var stepsAsInt = int.Parse(steps);
+
+                if (direction == "E")
+                {
+                    this.currentPosition.x = this.currentPosition.x + stepsAsInt;
+                }
+                    
+            }
+
             return commands.Length.ToString();
         }
     }

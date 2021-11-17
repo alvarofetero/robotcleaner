@@ -22,7 +22,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var result = robotCleaner.Clean(numberOfCommand, startPosition, commands);
+            var result = robotCleaner.Clean(numberOfCommand, commands);
 
             //Assert - Then
             result.Should().Be(numberOfCommandInInputLine);
@@ -64,7 +64,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, startPosition, commands);
+            var numberOfCommands = robotCleaner.Clean(1, commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
@@ -76,13 +76,13 @@ namespace RobotCleanerUnitTests
         public void ReturnCurrentPosition_2_1_GivenThirdInputLineIs_E1_WhenStartPositionIs_1_1()
         {
             //Arrange - Given
-            var thirdLine = "E 0";
+            var thirdLine = "E 1";
             string[] commands = { thirdLine };
             var startPosition = new Position(1, 1);
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, startPosition, commands);
+            var numberOfCommands = robotCleaner.Clean(1, commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
