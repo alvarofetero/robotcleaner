@@ -52,7 +52,42 @@ namespace RobotCleanerUnitTests
             //Assert - Then
             result.x.Should().Be(xExpected);
             result.y.Should().Be(yExpected);
+        }
 
+        [Fact]
+        public void ReturnCurrentPosition_1_1_GivenThirdInputLineIs_E0_WhenStartPositionIs_1_1()
+        {
+            //Arrange - Given
+            var thirdLine = "E 0";
+            string[] commands = { thirdLine };
+            var startPosition = new Position(1, 1);
+            var robotCleaner = new RobotCleaner(startPosition);
+
+            //Act - When
+            var numberOfCommands = robotCleaner.Clean(1, startPosition, commands);
+            var result = robotCleaner.CurrentPosition;
+
+            //Assert - Then
+            result.x.Should().Be(1);
+            result.y.Should().Be(1);
+        }
+
+        [Fact]
+        public void ReturnCurrentPosition_2_1_GivenThirdInputLineIs_E1_WhenStartPositionIs_1_1()
+        {
+            //Arrange - Given
+            var thirdLine = "E 0";
+            string[] commands = { thirdLine };
+            var startPosition = new Position(1, 1);
+            var robotCleaner = new RobotCleaner(startPosition);
+
+            //Act - When
+            var numberOfCommands = robotCleaner.Clean(1, startPosition, commands);
+            var result = robotCleaner.CurrentPosition;
+
+            //Assert - Then
+            result.x.Should().Be(2);
+            result.y.Should().Be(1);
         }
     }
 }
