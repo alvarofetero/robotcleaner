@@ -39,7 +39,11 @@
                 {
                     this.currentPosition.x = this.currentPosition.x + stepsAsInt;
                 }
-                    
+                if (direction == "N")
+                {
+                    this.currentPosition.y = this.currentPosition.y - stepsAsInt;
+                }
+
             }
 
             return commands.Length.ToString();

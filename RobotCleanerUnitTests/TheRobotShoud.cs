@@ -76,7 +76,7 @@ namespace RobotCleanerUnitTests
 
         [Theory]
         [InlineData("N 0", 1, 1)]
-        [InlineData("N 1", 2, 1)]
+        [InlineData("N 1", 1, 0)]
         public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_North_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given
