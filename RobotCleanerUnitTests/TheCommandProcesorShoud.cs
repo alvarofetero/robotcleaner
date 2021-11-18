@@ -4,7 +4,7 @@ using Xunit;
 
 namespace RobotCleanerUnitTests
 {
-    public class TheRobotShoud
+    public class TheCommandProcesorShoud
     {
 
         [Theory]
@@ -22,10 +22,11 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var result = robotCleaner.Clean(numberOfCommand, commands);
-
+            robotCleaner.Clean(commands);
+            var result = robotCleaner.commandsToExecute.Length;
+            
             //Assert - Then
-            result.Should().Be(numberOfCommandInInputLine);
+            result.Should().Be(numberOfCommand);
         }
 
         [Theory]
@@ -66,7 +67,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var numberOfPlaces = robotCleaner.Clean(commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
@@ -86,7 +87,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var numberOfPlaces = robotCleaner.Clean(commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
@@ -110,7 +111,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var numberOfPlaces = robotCleaner.Clean(commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
@@ -133,7 +134,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfCommands = robotCleaner.Clean(1, commands);
+            var numberOfPlaces = robotCleaner.Clean(commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then

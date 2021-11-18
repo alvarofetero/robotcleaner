@@ -2,7 +2,7 @@
 
 namespace RobotCleanerLibrary
 {
-    public class DirectionFactory
+    public static class DirectionFactory
     {
         public static IDirection CreateDirectionFrom(string direction)
         {

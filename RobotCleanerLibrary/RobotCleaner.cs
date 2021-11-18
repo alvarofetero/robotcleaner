@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RobotCleanerLibrary
 {
@@ -8,10 +9,13 @@ namespace RobotCleanerLibrary
         private int maxValueYPosition = 100000;
         private int minValueXPosition = -100000;
         private int minValueYPosition = -100000;
+        
         private Position currentPosition;
+        public string[] commandsToExecute;
 
         public Position CurrentPosition { get { return currentPosition; } }
         IDirection currentDirection;
+        
 
         
 
@@ -29,8 +33,9 @@ namespace RobotCleanerLibrary
             
         }
 
-        public string Clean(int numberOfCommand, string[] commands)
+        public int Clean(string[] commands)
         {
+            commandsToExecute = commands;
             if (commands.Length>0)
             {
                 var currentCommand=commands[0].Split(' ');
@@ -45,8 +50,8 @@ namespace RobotCleanerLibrary
                 this.currentPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
                 
             }
-
-            return commands.Length.ToString();
+            int placesCleaned = 0;
+            return placesCleaned;
         }
 
        
