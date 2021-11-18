@@ -39,24 +39,41 @@
 
                 if (direction == "E")
                 {
-                    this.currentPosition.x = this.currentPosition.x + stepsAsInt;
+                    MoveEast(stepsAsInt);
                 }
                 if (direction == "W")
                 {
-                    this.currentPosition.x = this.currentPosition.x - stepsAsInt;
+                    MoveWest(stepsAsInt);
                 }
                 if (direction == "N")
                 {
-                    this.currentPosition.y = this.currentPosition.y - stepsAsInt;
+                    MoveNorth(stepsAsInt);
                 }
                 if (direction == "S")
                 {
-                    this.currentPosition.y = this.currentPosition.y + stepsAsInt;
+                    MoveSouth(stepsAsInt);
                 }
-
             }
 
             return commands.Length.ToString();
         }
+
+        private void MoveNorth(int numberOfSteps)
+        {
+            this.currentPosition.y = this.currentPosition.y - numberOfSteps;
+        }
+        private void MoveSouth(int numberOfSteps)
+        {
+            this.currentPosition.y = this.currentPosition.y + numberOfSteps;
+        }
+        private void MoveEast(int numberOfSteps)
+        {
+            this.currentPosition.x = this.currentPosition.x + numberOfSteps;
+        }
+        private void MoveWest(int numberOfSteps)
+        {
+            this.currentPosition.x = this.currentPosition.x - numberOfSteps;
+        }
+
     }
 }
