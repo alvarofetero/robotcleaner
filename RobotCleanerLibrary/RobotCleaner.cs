@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RobotCleanerLibrary
 {
@@ -14,6 +15,7 @@ namespace RobotCleanerLibrary
         
         private Position currentPosition;
         public string[] commandsToExecute;
+        List<Position> listOfVisitedPlaces;
 
         public Position CurrentPosition { get { return currentPosition; } }
         IDirection currentDirection;
@@ -47,13 +49,95 @@ namespace RobotCleanerLibrary
                     if (stepsAsInt > maximumSteps) stepsAsInt = maximumSteps;
 
                     this.currentDirection= DirectionFactory.CreateDirectionFrom(directionFromInput);
+                    
+                    AddVisitedPlacesToList(this.currentPosition, this.currentPosition);
 
-                    this.currentPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
-                
+                    var newPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
+
+                    AddVisitedPlacesToList(this.currentPosition, newPosition);
+
+                    this.currentPosition = newPosition;
                 }
             }
-            int placesCleaned = 0;
+            var placesCleaned = CalculateCleanedPlaces();
             return placesCleaned;
+        }
+
+        private void AddVisitedPlacesToList(Position startPosition, Position endPosition)
+        {
+            if (this.listOfVisitedPlaces == null)
+            {
+                this.listOfVisitedPlaces = new List<Position>();
+            }
+        
+            Position newPosition;
+            var diffX = endPosition.x - startPosition.x;
+            var diffY = endPosition.y - startPosition.y;
+
+            var tempX = 0;
+            var tempY = 0;
+
+
+            if (diffX == 0 && diffY ==0)
+            {
+                newPosition = new Position(startPosition.x,startPosition.y);
+                if (PositionDoesNotExistInList(newPosition))
+                {
+                    this.listOfVisitedPlaces.Add(newPosition);
+                }
+                
+            }
+
+            if (diffY == 0)
+            {
+                tempY = endPosition.y;
+            }
+
+            if (diffX==0)
+            {
+                tempX = endPosition.x;
+            }
+            else
+            {
+               if (diffX > 0)
+               {
+                    var startAt = startPosition.x + 1;
+                    for (int i=startAt; i<=endPosition.x; i++)
+                    {
+                        newPosition = new Position(i, tempY);
+                        if (PositionDoesNotExistInList(newPosition))
+                        {
+                            this.listOfVisitedPlaces.Add(newPosition);
+                        }
+                        
+                    }
+               }
+               if (diffX<0)
+               {
+                    var startAt = startPosition.x -1;
+                    for (int i = startAt; i >= endPosition.x; i--)
+                    {
+                        newPosition = new Position(i, tempY);
+                        if (PositionDoesNotExistInList(newPosition))
+                        {
+                            this.listOfVisitedPlaces.Add(newPosition);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private bool PositionDoesNotExistInList(Position positionToCheck)
+        {
+            return !this.listOfVisitedPlaces.Contains(positionToCheck);
+        }
+
+        private int CalculateCleanedPlaces()
+        {
+            if (this.listOfVisitedPlaces == null)
+                return 0;
+            return this.listOfVisitedPlaces.Count;
         }
 
 

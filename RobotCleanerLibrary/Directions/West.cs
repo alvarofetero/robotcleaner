@@ -2,6 +2,17 @@
 {
     public class West : IDirection
     {
-        public Position MoveForward(Position position, int numberOfSteps) => new Position(position.x - numberOfSteps, position.y);
+        private int MinWestBoundary = 0;
+        public Position MoveForward(Position position, int numberOfSteps)
+        {
+            if (position.x - numberOfSteps < MinWestBoundary)
+            {
+                return new Position(MinWestBoundary, position.y);
+            }
+            else
+            { 
+                return new Position(position.x - numberOfSteps, position.y);
+            }
+        }
     }
 }

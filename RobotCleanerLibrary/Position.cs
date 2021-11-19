@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RobotCleanerLibrary
 {
-    public class Position
+    public class Position : IEquatable<Position>
     {
         public int x;
         public int y;
@@ -15,5 +15,9 @@ namespace RobotCleanerLibrary
             this.y = y;
         }
 
+        public bool Equals(Position other)
+        {
+            return this.x == other.x && this.y == other.y;
+        }
     }
 }
