@@ -246,6 +246,39 @@ namespace RobotCleanerUnitTests
             places.Should().Be(expectedResult);
         }
 
+        [Fact]
+        public void Return11_WhenStartAt_10_11_And_CommandsAreS3_W2_N5()
+        {
+            //Arrange
+            var initialPosition = new Position(10, 11);
+            var robotCleaner = new RobotCleaner(initialPosition);
+            string[] commands = { "S 3", "W 2","N 5" };
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(11);
+        }
+
+        [Theory]
+        [InlineData(10, 22, new string[] { "E 2", "N 1" }, 4)]
+        [InlineData(16, 10, new string[] { "E 1", "W 1" }, 2)]
+        [InlineData(6, 4, new string[] { "W 2", "N 1", "S 4","E 2", "N 4"}, 12)]
+        public void ReturnCorrectResult_WhenMoveInDifferentDirections(int startingX, int startingY, string[] commands, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, startingY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+
 
 
     }
