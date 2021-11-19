@@ -5,6 +5,8 @@ namespace RobotCleanerLibrary
 {
     public partial class RobotCleaner
     {
+        private int maximumSteps = 100000;
+        private int minimumSteps = 0;
         private int maxValueXPosition = 100000;
         private int maxValueYPosition = 100000;
         private int minValueXPosition = -100000;
@@ -15,9 +17,6 @@ namespace RobotCleanerLibrary
 
         public Position CurrentPosition { get { return currentPosition; } }
         IDirection currentDirection;
-        
-
-        
 
         public RobotCleaner(Position initialPosition)
         {
@@ -35,24 +34,29 @@ namespace RobotCleanerLibrary
 
         public int Clean(string[] commands)
         {
-            commandsToExecute = commands;
-            if (commands.Length>0)
-            {
-                var currentCommand=commands[0].Split(' ');
-                var directionFromInput = currentCommand[0];
-                var steps = currentCommand[1];
-                var stepsAsInt = int.Parse(steps);
-                if (stepsAsInt < 0) stepsAsInt = 0;
-                if (stepsAsInt > 100000) stepsAsInt = 100000;
+            if (commands != null)
+            { 
+                commandsToExecute = commands;
+                if (commands.Length>0)
+                {
+                    var currentCommand=commands[0].Split(' ');
+                    var directionFromInput = currentCommand[0];
+                    var steps = currentCommand[1];
+                    var stepsAsInt = int.Parse(steps);
+                    if (stepsAsInt < minimumSteps) stepsAsInt = minimumSteps;
+                    if (stepsAsInt > maximumSteps) stepsAsInt = maximumSteps;
 
-                this.currentDirection= DirectionFactory.CreateDirectionFrom(directionFromInput);
+                    this.currentDirection= DirectionFactory.CreateDirectionFrom(directionFromInput);
 
-                this.currentPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
+                    this.currentPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
                 
+                }
             }
             int placesCleaned = 0;
             return placesCleaned;
         }
+
+
 
        
 
