@@ -67,7 +67,7 @@ namespace RobotCleanerUnitTests
             var robotCleaner = new RobotCleaner(startPosition);
 
             //Act - When
-            var numberOfPlaces = robotCleaner.Clean(commands);
+            robotCleaner.Clean(commands);
             var result = robotCleaner.CurrentPosition;
 
             //Assert - Then
