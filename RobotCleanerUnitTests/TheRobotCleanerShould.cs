@@ -200,6 +200,7 @@ namespace RobotCleanerUnitTests
         [Theory]
         [InlineData(10, 22, new string[] { "N 2" }, 3)]
         [InlineData(5, 17, new string[] { "N 4"}, 5)]
+        [InlineData(1, 10, new string[] { "N 100000" }, -100000 + 10 + 1)]
         public void ReturnCorrectResult_WhenMoveNorth(int startingX, int startingY, string[] commands, int expectedResult)
         {
             //Arrange
@@ -216,6 +217,7 @@ namespace RobotCleanerUnitTests
         [Theory]
         [InlineData(21, 5, new string[] { "S 2" }, 3)]
         [InlineData(21, 7, new string[] { "S 4" }, 5)]
+        [InlineData(1, 10, new string[] { "S 100000" }, 100000 - 10 + 1)]
         public void ReturnCorrectResult_WhenMoveSouth(int startingX, int startingY, string[] commands, int expectedResult)
         {
             //Arrange

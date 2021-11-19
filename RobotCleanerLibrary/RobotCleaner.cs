@@ -82,8 +82,8 @@ namespace RobotCleanerLibrary
 
             if (diffX > 0) direction = Direction.Right;
             if (diffX < 0) direction =  Direction.Left;
-            if (diffY > 0) direction = Direction.Up;
-            if (diffY < 0) direction = Direction.Down;
+            if (diffY > 0) direction = Direction.Down;
+            if (diffY < 0) direction = Direction.Up;
 
             return direction;
 
@@ -95,50 +95,28 @@ namespace RobotCleanerLibrary
             {
                 this.listOfVisitedPlaces = new List<Position>();
             }
-        
-            Position newPosition;
-            var diffX = endPosition.x - startPosition.x;
-            var diffY = endPosition.y - startPosition.y;
 
-            var tempX = 0;
-            var tempY = 0;
-
-            if (diffX == 0)
+            var directionToAdd=CalculateDirectionToAdd(startPosition, endPosition);
+            
+            if (directionToAdd==Direction.NoOne)
             {
-                tempX = endPosition.x;
-            }
-            if (diffY == 0)
-            {
-                tempY = endPosition.y;
-            }
-
-            if (diffX == 0 && diffY ==0)
-            {
-                newPosition = new Position(startPosition.x,startPosition.y);
-                if (PositionDoesNotExistInList(newPosition))
-                {
-                    this.listOfVisitedPlaces.Add(newPosition);
-                }
+                AddCurrentPosition(startPosition.x, startPosition.y);
             }
             else
             {
-                if (diffY > 0)
-                {
-                    AddPositionsToTheDown(startPosition.y, endPosition.y, tempX);
-                } 
-                else
-                {
-                    AddPositionsToTheUp(startPosition.y, endPosition.y, tempX);
-                }
+                if (directionToAdd == Direction.Down)  AddPositionsToTheDown(startPosition.y, endPosition.y, endPosition.x);
+                if (directionToAdd == Direction.Up) AddPositionsToTheUp(startPosition.y, endPosition.y, endPosition.x);
+                if (directionToAdd == Direction.Right) AddPositionsToTheRight(startPosition.x, endPosition.x, endPosition.y);
+                if (directionToAdd == Direction.Left) AddPositionsToTheLeft(startPosition.x, endPosition.x, endPosition.y);
+            }
+        }
 
-                if (diffX > 0)
-                {
-                    AddPositionsToTheRight(startPosition.x, endPosition.x, tempY);
-                }
-                if (diffX < 0)
-                {
-                    AddPositionsToTheLeft(startPosition.x, endPosition.x, tempY);
-                }
+        private void AddCurrentPosition(int startX, int startY)
+        {
+            var newPosition = new Position(startX, startY);
+            if (PositionDoesNotExistInList(newPosition))
+            {
+                this.listOfVisitedPlaces.Add(newPosition);
             }
         }
 
