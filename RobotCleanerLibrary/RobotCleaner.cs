@@ -4,6 +4,15 @@ using System.Linq;
 
 namespace RobotCleanerLibrary
 {
+    public enum Direction
+    {
+        Right,
+        Left,
+        Up,
+        Down,
+        NoOne
+    }
+
     public partial class RobotCleaner
     {
         private int maximumSteps = 100000;
@@ -41,26 +50,43 @@ namespace RobotCleanerLibrary
                 commandsToExecute = commands;
                 if (commands.Length>0)
                 {
-                    var currentCommand=commands[0].Split(' ');
-                    var directionFromInput = currentCommand[0];
-                    var steps = currentCommand[1];
-                    var stepsAsInt = int.Parse(steps);
-                    if (stepsAsInt < minimumSteps) stepsAsInt = minimumSteps;
-                    if (stepsAsInt > maximumSteps) stepsAsInt = maximumSteps;
+                    var commandProcessor = new CommandProcessor();
+                    commandProcessor.ParseCommands(commandsToExecute);
+                    foreach(Command command in commandProcessor.ListOfCommands)
+                    {
+                        var stepsAsInt = int.Parse(command.Steps);
+                        if (stepsAsInt < minimumSteps) stepsAsInt = minimumSteps;
+                        if (stepsAsInt > maximumSteps) stepsAsInt = maximumSteps;
 
-                    this.currentDirection= DirectionFactory.CreateDirectionFrom(directionFromInput);
-                    
-                    AddVisitedPlacesToList(this.currentPosition, this.currentPosition);
+                        this.currentDirection = DirectionFactory.CreateDirectionFrom(command.Direction);
 
-                    var newPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
+                        AddVisitedPlacesToList(this.currentPosition, this.currentPosition);
 
-                    AddVisitedPlacesToList(this.currentPosition, newPosition);
+                        var newPosition = this.currentDirection.MoveForward(this.currentPosition, stepsAsInt);
 
-                    this.currentPosition = newPosition;
+                        AddVisitedPlacesToList(this.currentPosition, newPosition);
+
+                        this.currentPosition = newPosition;
+                    }
                 }
             }
             var placesCleaned = CalculateCleanedPlaces();
             return placesCleaned;
+        }
+
+        private Direction CalculateDirectionToAdd(Position startPosition, Position endPosition)
+        {
+            var direction = Direction.NoOne;
+            var diffX = endPosition.x - startPosition.x;
+            var diffY = endPosition.y - startPosition.y;
+
+            if (diffX > 0) direction = Direction.Right;
+            if (diffX < 0) direction =  Direction.Left;
+            if (diffY > 0) direction = Direction.Up;
+            if (diffY < 0) direction = Direction.Down;
+
+            return direction;
+
         }
 
         private void AddVisitedPlacesToList(Position startPosition, Position endPosition)
@@ -77,6 +103,14 @@ namespace RobotCleanerLibrary
             var tempX = 0;
             var tempY = 0;
 
+            if (diffX == 0)
+            {
+                tempX = endPosition.x;
+            }
+            if (diffY == 0)
+            {
+                tempY = endPosition.y;
+            }
 
             if (diffX == 0 && diffY ==0)
             {
@@ -85,48 +119,80 @@ namespace RobotCleanerLibrary
                 {
                     this.listOfVisitedPlaces.Add(newPosition);
                 }
-                
-            }
-
-            if (diffY == 0)
-            {
-                tempY = endPosition.y;
-            }
-
-            if (diffX==0)
-            {
-                tempX = endPosition.x;
             }
             else
             {
-               if (diffX > 0)
-               {
-                    var startAt = startPosition.x + 1;
-                    for (int i=startAt; i<=endPosition.x; i++)
-                    {
-                        newPosition = new Position(i, tempY);
-                        if (PositionDoesNotExistInList(newPosition))
-                        {
-                            this.listOfVisitedPlaces.Add(newPosition);
-                        }
-                        
-                    }
-               }
-               if (diffX<0)
-               {
-                    var startAt = startPosition.x -1;
-                    for (int i = startAt; i >= endPosition.x; i--)
-                    {
-                        newPosition = new Position(i, tempY);
-                        if (PositionDoesNotExistInList(newPosition))
-                        {
-                            this.listOfVisitedPlaces.Add(newPosition);
-                        }
+                if (diffY > 0)
+                {
+                    AddPositionsToTheDown(startPosition.y, endPosition.y, tempX);
+                } 
+                else
+                {
+                    AddPositionsToTheUp(startPosition.y, endPosition.y, tempX);
+                }
 
-                    }
+                if (diffX > 0)
+                {
+                    AddPositionsToTheRight(startPosition.x, endPosition.x, tempY);
+                }
+                if (diffX < 0)
+                {
+                    AddPositionsToTheLeft(startPosition.x, endPosition.x, tempY);
                 }
             }
         }
+
+        private void AddPositionsToTheUp(int startY, int endY, int currentX)
+        {
+            var startAt = startY - 1;
+            for (int i = startAt; i >= endY; i--)
+            {
+                var newPosition = new Position(currentX, i);
+                if (PositionDoesNotExistInList(newPosition))
+                {
+                    this.listOfVisitedPlaces.Add(newPosition);
+                }
+            }
+        }
+
+        private void AddPositionsToTheDown(int startY, int endY, int currentX)
+        {
+            var startAt = startY + 1;
+            for (int i = startAt; i <= endY; i++)
+            {
+                var newPosition = new Position(currentX, i);
+                if (PositionDoesNotExistInList(newPosition))
+                {
+                    this.listOfVisitedPlaces.Add(newPosition);
+                }
+            }
+        }
+
+        private void AddPositionsToTheRight(int startX, int endX, int currentY)
+        {
+            var startAt = startX + 1;
+            for (int i = startAt; i <= endX; i++)
+            {
+                var newPosition = new Position(i, currentY);
+                if (PositionDoesNotExistInList(newPosition))
+                {
+                    this.listOfVisitedPlaces.Add(newPosition);
+                }
+            }
+        }
+        private void AddPositionsToTheLeft(int startX, int endX, int currentY)
+        {
+            var startAt = startX - 1;
+            for (int i = startAt; i >= endX; i--)
+            {
+                var newPosition = new Position(i, currentY);
+                if (PositionDoesNotExistInList(newPosition))
+                {
+                    this.listOfVisitedPlaces.Add(newPosition);
+                }
+            }
+        }
+
 
         private bool PositionDoesNotExistInList(Position positionToCheck)
         {
@@ -135,8 +201,7 @@ namespace RobotCleanerLibrary
 
         private int CalculateCleanedPlaces()
         {
-            if (this.listOfVisitedPlaces == null)
-                return 0;
+            if (this.listOfVisitedPlaces == null)  return 0;
             return this.listOfVisitedPlaces.Count;
         }
 

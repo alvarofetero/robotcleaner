@@ -133,6 +133,120 @@ namespace RobotCleanerUnitTests
             places.Should().Be(5);
         }
 
+        [Theory]
+        [InlineData(12, 18, "W 9", 10)]
+        [InlineData(10, 22, "W 4", 5)]
+        [InlineData(10, 22, "W 12", 13)]
+        public void ReturnExpectedNumberOfCleanedPlaces_WhenMoveWest(int startingX, int staringY, string commandWest, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, staringY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+            string[] commands = { commandWest };
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+        [Fact]
+        public void Return3_WhenStartAt_10_22_And_CommandsAreE2W2()
+        {
+            //Arrange
+            var initialPosition = new Position(10, 22);
+            var robotCleaner = new RobotCleaner(initialPosition);
+            string[] commands = { "E 2", "W 2" };
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(3);
+        }
+
+        [Theory]
+        [InlineData(10, 22, new string[] { "E 2", "W 2"}, 3)]
+        [InlineData(5, 17, new string[] { "W 4", "E 2" }, 5)]
+        public void ReturnCorrectResult_WhenMoveWestAndEast(int startingX, int startingY, string[] commands, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, startingY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+        [Fact]
+        public void Return5_WhenStartAt_10_22_And_CommandsAreN4()
+        {
+            //Arrange
+            var initialPosition = new Position(10, 22);
+            var robotCleaner = new RobotCleaner(initialPosition);
+            string[] commands = { "N 4" };
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(5);
+        }
+
+        [Theory]
+        [InlineData(10, 22, new string[] { "N 2" }, 3)]
+        [InlineData(5, 17, new string[] { "N 4"}, 5)]
+        public void ReturnCorrectResult_WhenMoveNorth(int startingX, int startingY, string[] commands, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, startingY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData(21, 5, new string[] { "S 2" }, 3)]
+        [InlineData(21, 7, new string[] { "S 4" }, 5)]
+        public void ReturnCorrectResult_WhenMoveSouth(int startingX, int startingY, string[] commands, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, startingY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+        [Theory]
+        [InlineData(10, 22, new string[] { "N 2", "S 2" }, 3)]
+        [InlineData(5, 17, new string[] { "S 4", "N 2" }, 5)]
+        [InlineData(21, 5, new string[] { "N 2", "S 3" }, 4)]
+        public void ReturnCorrectResult_WhenMoveNorthAndSouth(int startingX, int startingY, string[] commands, int expectedResult)
+        {
+            //Arrange
+            var initialPosition = new Position(startingX, startingY);
+            var robotCleaner = new RobotCleaner(initialPosition);
+
+            //Act
+            var places = robotCleaner.Clean(commands);
+
+            //Assert
+            places.Should().Be(expectedResult);
+        }
+
+
 
     }
 }

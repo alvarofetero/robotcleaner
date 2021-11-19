@@ -141,5 +141,37 @@ namespace RobotCleanerUnitTests
             result.x.Should().Be(xExpected);
             result.y.Should().Be(yExpected);
         }
+
+        [Fact]
+        public void ReturnCorrectNumberOfParsedCommands()
+        {
+            //Arrange
+            string[] commands = { "E 1", "W 2" };
+            var commandProcessor = new CommandProcessor();
+            
+            //Act
+            commandProcessor.ParseCommands(commands);
+
+            //Assert
+            commandProcessor.ListOfCommands.Count.Should().Be(2);
+
+        }
+        [Fact]
+        public void ReturnCorrectParsedCommands()
+        {
+            //Arrange
+            string[] commands = { "E 1", "W 2" };
+            var commandProcessor = new CommandProcessor();
+
+            //Act
+            commandProcessor.ParseCommands(commands);
+
+            //Assert
+            commandProcessor.ListOfCommands[0].Direction.Should().Be("E");
+            commandProcessor.ListOfCommands[0].Steps.Should().Be("1");
+            commandProcessor.ListOfCommands[1].Direction.Should().Be("W");
+            commandProcessor.ListOfCommands[1].Steps.Should().Be("2");
+
+        }
     }
 }
