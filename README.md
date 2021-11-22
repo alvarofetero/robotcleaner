@@ -1,6 +1,8 @@
 # Robotcleaner
 
-## To run the application
+## From Visual Studio
+
+### To run the application
 
 1. Clone the repositroy
 2. Open the solution RobotCleaner.sln
@@ -8,7 +10,26 @@
 4. Run the RobotClenaerClient project
 5. Enter the input values.
 
-## Tests
+### Tests
 
 Run all the tests in the project : RobotCleanerUnitTests
+
+
+## From shell
+
+### Build the solution
+
+
+> dotnet build .
+
+
+## Test
+
+> cd RobotCleanerUnitTests\
+> dotnet test .
+
+
+
+
+
 
