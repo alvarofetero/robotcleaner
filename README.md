@@ -8,8 +8,6 @@
 4 Run the RobotClenaerClient project
 5 Enter the input values.
 
---
-
 ## Tests
 
 Run all the tests in the project : RobotCleanerUnitTests
