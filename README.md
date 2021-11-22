@@ -1,6 +1,6 @@
 # Robotcleaner
 
-##To run the application
+## To run the application
 
 1 Clone the repositroy
 2 Open the solution RobotCleaner.sln
@@ -10,7 +10,7 @@
 
 --
 
-##Tests
+## Tests
 
 Run all the tests in the project : RobotCleanerUnitTests
 
