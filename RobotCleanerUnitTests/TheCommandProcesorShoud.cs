@@ -124,7 +124,7 @@ namespace RobotCleanerUnitTests
         [InlineData("S 1", 1, 2)]
         [InlineData("S 5", 1, 6)]
         [InlineData("S -1", 1, 1)]
-        [InlineData("S 100000", 1, 100001)]
+        [InlineData("S 100000", 1, 100000)]
         public void ReturnCurrentPositionCorrect_GivenThirdInputLineIs_South_WhenStartPositionIs_1_1(string commandLine, int xExpected, int yExpected)
         {
             //Arrange - Given
