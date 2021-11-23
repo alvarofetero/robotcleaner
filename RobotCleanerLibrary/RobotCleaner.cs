@@ -158,6 +158,7 @@ namespace RobotCleanerLibrary
                 }
             }
         }
+        
         private void AddPositionsToTheLeft(int startX, int endX, int currentY)
         {
             var startAt = startX - 1;
@@ -170,7 +171,6 @@ namespace RobotCleanerLibrary
                 }
             }
         }
-
 
         private bool PositionDoesNotExistInList(Position positionToCheck)
         {
