@@ -8,14 +8,17 @@ namespace RobotCleanerClient
     {
         static void Main(string[] args)
         {
-            var inputReader = new InputReader();
-            inputReader.ReadInput();
-            
-            var robotCleaner = new RobotCleaner(inputReader.InitialPosition);
-            var placesCleaned = robotCleaner.Clean(inputReader.Commands.ToArray());
+            while(true)
+            { 
+                var inputReader = new InputReader();
+                inputReader.ReadInput();
 
-            Console.WriteLine($" => Cleaned :{placesCleaned}");
+                var robotCleaner = new RobotCleaner(inputReader.InitialPosition);
+                var placesCleaned = robotCleaner.Clean(inputReader.Commands.ToArray());
+
+                Console.WriteLine($" => Cleaned :{placesCleaned}");
+            }
+
         }
-
     }
 }
